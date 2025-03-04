@@ -412,10 +412,10 @@ elif st.session_state.page_num == 5:
         for message in st.session_state.messages1:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
-        if st.session_state.chat_num1 >= 3:
+        if st.session_state.chat_num1 >= 2:
             st.session_state.chat_disabled1 = True
         user_input = st.chat_input(
-            f"还可以输入{3-st.session_state.chat_num1}次，请输入...",
+            f"还可以输入{2-st.session_state.chat_num1}次，请输入...",
             disabled=st.session_state.chat_disabled1,
             on_submit=disable_callback1,
         )
@@ -436,7 +436,7 @@ elif st.session_state.page_num == 5:
             )
             st.session_state.chat_disabled1 = False
             st.rerun()
-        if st.session_state.chat_num1 >= 3:
+        if st.session_state.chat_num1 >= 2:
             with st.form("block5"):
                 st.write("请根据你的知识储备及与AI的对话，判断命题的真假")
                 ## Q15
