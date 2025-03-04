@@ -16,7 +16,7 @@ propositions = [
     "最好把手机的屏保、电脑的屏保全部改成绿色，因为绿色能缓解眼睛疲劳，保护视力。",
 ]
 ## 页面变量设置
-st.set_page_config(page_title="科学事实核查调研", page_icon="🧐")
+st.set_page_config(page_title="科学事实核查调研Demo-V2", page_icon="🧐")
 ## Session state 初始化
 if True:
     if "data_dict" not in st.session_state:
@@ -451,168 +451,168 @@ elif st.session_state.page_num == 5:
                     st.markdown("提交成功，请点击**下一页**")
             if st.session_state.block5_submitted == True:
                 st.button("下一页", on_click=goToNextPage)
-# ## Block 6 LLM 对话 2 前测
-# elif st.session_state.page_num == 6:
-#     placeholder.empty()
-#     with placeholder.container():
-#         with st.form("block6"):
-#             st.write("请根据你的知识储备，判断以下命题的真假")
-#             st.markdown(f"**{propositions[1]}**")
-#             ## Q16
-#             st.radio("该命题是：", options=["真命题", "假命题"], key="q16", index=None)
-#             submitted = st.form_submit_button("提交本页")
-#             if submitted:
-#                 st.session_state.data_dict["q16"] = st.session_state.q16
-#                 st.session_state.block6_submitted = True
-#                 st.markdown("提交成功，请点击**下一页**")
-#         if st.session_state.block6_submitted == True:
-#             st.button("下一页", on_click=goToNextPage)
-# ## Block 7 LLM 对话 2 后测
-# elif st.session_state.page_num == 7:
+    # ## Block 6 LLM 对话 2 前测
+    # elif st.session_state.page_num == 6:
+    #     placeholder.empty()
+    #     with placeholder.container():
+    #         with st.form("block6"):
+    #             st.write("请根据你的知识储备，判断以下命题的真假")
+    #             st.markdown(f"**{propositions[1]}**")
+    #             ## Q16
+    #             st.radio("该命题是：", options=["真命题", "假命题"], key="q16", index=None)
+    #             submitted = st.form_submit_button("提交本页")
+    #             if submitted:
+    #                 st.session_state.data_dict["q16"] = st.session_state.q16
+    #                 st.session_state.block6_submitted = True
+    #                 st.markdown("提交成功，请点击**下一页**")
+    #         if st.session_state.block6_submitted == True:
+    #             st.button("下一页", on_click=goToNextPage)
+    # ## Block 7 LLM 对话 2 后测
+    # elif st.session_state.page_num == 7:
 
-#     def disable_callback2():
-#         st.session_state.chat_disabled2 = True
+    #     def disable_callback2():
+    #         st.session_state.chat_disabled2 = True
 
-#     placeholder.empty()
+    #     placeholder.empty()
 
-#     with placeholder.container():
-#         st.write(
-#             "接下来，你有3次与AI对话的机会。请向AI提出与命题相关的问题。3次机会用尽后判断命题真假。命题为："
-#         )
-#         st.markdown(f"**{propositions[1]}**")
-#         ## 显示聊天历史
-#         for message in st.session_state.messages2:
-#             with st.chat_message(message["role"]):
-#                 st.markdown(message["content"])
-#         if st.session_state.chat_num2 >= 3:
-#             st.session_state.chat_disabled2 = True
-#         user_input = st.chat_input(
-#             f"还可以输入{3-st.session_state.chat_num2}次，请输入...",
-#             disabled=st.session_state.chat_disabled2,
-#             on_submit=disable_callback2,
-#         )
-#         if user_input:
-#             ## 显示用户消息
-#             with st.chat_message("user"):
-#                 st.markdown(user_input)
-#             st.session_state.chat_num2 += 1
-#             ## 将用户消息添加到聊天历史
-#             st.session_state.messages2.append({"role": "user", "content": user_input})
+    #     with placeholder.container():
+    #         st.write(
+    #             "接下来，你有3次与AI对话的机会。请向AI提出与命题相关的问题。3次机会用尽后判断命题真假。命题为："
+    #         )
+    #         st.markdown(f"**{propositions[1]}**")
+    #         ## 显示聊天历史
+    #         for message in st.session_state.messages2:
+    #             with st.chat_message(message["role"]):
+    #                 st.markdown(message["content"])
+    #         if st.session_state.chat_num2 >= 3:
+    #             st.session_state.chat_disabled2 = True
+    #         user_input = st.chat_input(
+    #             f"还可以输入{3-st.session_state.chat_num2}次，请输入...",
+    #             disabled=st.session_state.chat_disabled2,
+    #             on_submit=disable_callback2,
+    #         )
+    #         if user_input:
+    #             ## 显示用户消息
+    #             with st.chat_message("user"):
+    #                 st.markdown(user_input)
+    #             st.session_state.chat_num2 += 1
+    #             ## 将用户消息添加到聊天历史
+    #             st.session_state.messages2.append({"role": "user", "content": user_input})
 
-#             ## 显示助手回应
-#             with st.chat_message("assistant"):
-#                 response = st.write_stream(get_response(st.session_state.messages2))
-#             ## 将助手回应添加到聊天历史
-#             st.session_state.messages2.append(
-#                 {"role": "assistant", "content": response}
-#             )
-#             st.session_state.chat_disabled2 = False
-#             st.rerun()
-#         if st.session_state.chat_num2 >= 3:
-#             with st.form("block7"):
-#                 st.write("请根据你的知识储备及与AI的对话，判断命题的真假")
-#                 ## Q17
-#                 st.radio(
-#                     "该命题是：", options=["真命题", "假命题"], key="q17", index=None
-#                 )
-#                 submitted = st.form_submit_button("提交本页")
-#                 if submitted:
-#                     st.session_state.data_dict["q17"] = st.session_state.q17
-#                     st.session_state.data_dict["dialog2"] = st.session_state.messages2
-#                     st.session_state.block7_submitted = True
-#                     st.markdown("提交成功，请点击**下一页**")
-#             if st.session_state.block7_submitted == True:
-#                 st.button("下一页", on_click=goToNextPage)
-# ## Block 8 LLM 对话 3 前测
-# elif st.session_state.page_num == 8:
-#     placeholder.empty()
-#     with placeholder.container():
-#         with st.form("block8"):
-#             st.write("请根据你的知识储备，判断以下命题的真假")
-#             st.markdown(f"**{propositions[2]}**")
-#             ## Q18
-#             st.radio("该命题是：", options=["真命题", "假命题"], key="q18", index=None)
-#             submitted = st.form_submit_button("提交本页")
-#             if submitted:
-#                 st.session_state.data_dict["q18"] = st.session_state.q18
-#                 st.session_state.block8_submitted = True
-#                 st.markdown("提交成功，请点击**下一页**")
-#         if st.session_state.block8_submitted == True:
-#             st.button("下一页", on_click=goToNextPage)
-# ## Block 9 LLM 对话 3 后测
-# elif st.session_state.page_num == 9:
+    #             ## 显示助手回应
+    #             with st.chat_message("assistant"):
+    #                 response = st.write_stream(get_response(st.session_state.messages2))
+    #             ## 将助手回应添加到聊天历史
+    #             st.session_state.messages2.append(
+    #                 {"role": "assistant", "content": response}
+    #             )
+    #             st.session_state.chat_disabled2 = False
+    #             st.rerun()
+    #         if st.session_state.chat_num2 >= 3:
+    #             with st.form("block7"):
+    #                 st.write("请根据你的知识储备及与AI的对话，判断命题的真假")
+    #                 ## Q17
+    #                 st.radio(
+    #                     "该命题是：", options=["真命题", "假命题"], key="q17", index=None
+    #                 )
+    #                 submitted = st.form_submit_button("提交本页")
+    #                 if submitted:
+    #                     st.session_state.data_dict["q17"] = st.session_state.q17
+    #                     st.session_state.data_dict["dialog2"] = st.session_state.messages2
+    #                     st.session_state.block7_submitted = True
+    #                     st.markdown("提交成功，请点击**下一页**")
+    #             if st.session_state.block7_submitted == True:
+    #                 st.button("下一页", on_click=goToNextPage)
+    # ## Block 8 LLM 对话 3 前测
+    # elif st.session_state.page_num == 8:
+    #     placeholder.empty()
+    #     with placeholder.container():
+    #         with st.form("block8"):
+    #             st.write("请根据你的知识储备，判断以下命题的真假")
+    #             st.markdown(f"**{propositions[2]}**")
+    #             ## Q18
+    #             st.radio("该命题是：", options=["真命题", "假命题"], key="q18", index=None)
+    #             submitted = st.form_submit_button("提交本页")
+    #             if submitted:
+    #                 st.session_state.data_dict["q18"] = st.session_state.q18
+    #                 st.session_state.block8_submitted = True
+    #                 st.markdown("提交成功，请点击**下一页**")
+    #         if st.session_state.block8_submitted == True:
+    #             st.button("下一页", on_click=goToNextPage)
+    # ## Block 9 LLM 对话 3 后测
+    # elif st.session_state.page_num == 9:
 
-#     def disable_callback3():
-#         st.session_state.chat_disabled3 = True
+    #     def disable_callback3():
+    #         st.session_state.chat_disabled3 = True
 
-#     placeholder.empty()
+    #     placeholder.empty()
 
-#     with placeholder.container():
-#         st.write(
-#             "接下来，你有3次与AI对话的机会。请向AI提出与命题相关的问题。3次机会用尽后判断命题真假。命题为："
-#         )
-#         st.markdown(f"**{propositions[2]}**")
-#         ## 显示聊天历史
-#         for message in st.session_state.messages3:
-#             with st.chat_message(message["role"]):
-#                 st.markdown(message["content"])
-#         if st.session_state.chat_num3 >= 3:
-#             st.session_state.chat_disabled3 = True
-#         user_input = st.chat_input(
-#             f"还可以输入{3-st.session_state.chat_num3}次，请输入...",
-#             disabled=st.session_state.chat_disabled3,
-#             on_submit=disable_callback3,
-#         )
-#         if user_input:
-#             ## 显示用户消息
-#             with st.chat_message("user"):
-#                 st.markdown(user_input)
-#             st.session_state.chat_num3 += 1
-#             ## 将用户消息添加到聊天历史
-#             st.session_state.messages3.append({"role": "user", "content": user_input})
+    #     with placeholder.container():
+    #         st.write(
+    #             "接下来，你有3次与AI对话的机会。请向AI提出与命题相关的问题。3次机会用尽后判断命题真假。命题为："
+    #         )
+    #         st.markdown(f"**{propositions[2]}**")
+    #         ## 显示聊天历史
+    #         for message in st.session_state.messages3:
+    #             with st.chat_message(message["role"]):
+    #                 st.markdown(message["content"])
+    #         if st.session_state.chat_num3 >= 3:
+    #             st.session_state.chat_disabled3 = True
+    #         user_input = st.chat_input(
+    #             f"还可以输入{3-st.session_state.chat_num3}次，请输入...",
+    #             disabled=st.session_state.chat_disabled3,
+    #             on_submit=disable_callback3,
+    #         )
+    #         if user_input:
+    #             ## 显示用户消息
+    #             with st.chat_message("user"):
+    #                 st.markdown(user_input)
+    #             st.session_state.chat_num3 += 1
+    #             ## 将用户消息添加到聊天历史
+    #             st.session_state.messages3.append({"role": "user", "content": user_input})
 
-#             ## 显示助手回应
-#             with st.chat_message("assistant"):
-#                 response = st.write_stream(get_response(st.session_state.messages3))
-#             ## 将助手回应添加到聊天历史
-#             st.session_state.messages3.append(
-#                 {"role": "assistant", "content": response}
-#             )
-#             st.session_state.chat_disabled3 = False
-#             st.rerun()
-#         if st.session_state.chat_num3 >= 3:
-#             with st.form("block9"):
-#                 st.write("请根据你的知识储备及与AI的对话，判断命题的真假")
-#                 ## Q19
-#                 st.radio(
-#                     "该命题是：", options=["真命题", "假命题"], key="q19", index=None
-#                 )
-#                 submitted = st.form_submit_button("提交本页")
-#                 if submitted:
-#                     st.session_state.data_dict["q19"] = st.session_state.q19
-#                     st.session_state.data_dict["dialog3"] = st.session_state.messages3
-#                     st.session_state.block9_submitted = True
-#                     st.markdown("提交成功，请点击**下一页**")
-#             if st.session_state.block9_submitted == True:
-#                 st.button("下一页", on_click=goToNextPage)
-# ## Block 10 LLM 对话 4 前测
-# elif st.session_state.page_num == 10:
-#     placeholder.empty()
-#     with placeholder.container():
-#         with st.form("block10"):
-#             st.write("请根据你的知识储备，判断以下命题的真假")
-#             st.markdown(f"**{propositions[3]}**")
-#             ## Q20
-#             st.radio("该命题是：", options=["真命题", "假命题"], key="q20", index=None)
-#             submitted = st.form_submit_button("提交本页")
-#             if submitted:
-#                 st.session_state.data_dict["q20"] = st.session_state.q20
-#                 st.session_state.block10_submitted = True
-#                 st.markdown("提交成功，请点击**下一页**")
-#         if st.session_state.block10_submitted == True:
-#             st.button("下一页", on_click=goToNextPage)
-# ## Block 11 LLM 对话 4 后测
-# elif st.session_state.page_num == 11:
+    #             ## 显示助手回应
+    #             with st.chat_message("assistant"):
+    #                 response = st.write_stream(get_response(st.session_state.messages3))
+    #             ## 将助手回应添加到聊天历史
+    #             st.session_state.messages3.append(
+    #                 {"role": "assistant", "content": response}
+    #             )
+    #             st.session_state.chat_disabled3 = False
+    #             st.rerun()
+    #         if st.session_state.chat_num3 >= 3:
+    #             with st.form("block9"):
+    #                 st.write("请根据你的知识储备及与AI的对话，判断命题的真假")
+    #                 ## Q19
+    #                 st.radio(
+    #                     "该命题是：", options=["真命题", "假命题"], key="q19", index=None
+    #                 )
+    #                 submitted = st.form_submit_button("提交本页")
+    #                 if submitted:
+    #                     st.session_state.data_dict["q19"] = st.session_state.q19
+    #                     st.session_state.data_dict["dialog3"] = st.session_state.messages3
+    #                     st.session_state.block9_submitted = True
+    #                     st.markdown("提交成功，请点击**下一页**")
+    #             if st.session_state.block9_submitted == True:
+    #                 st.button("下一页", on_click=goToNextPage)
+    # ## Block 10 LLM 对话 4 前测
+    # elif st.session_state.page_num == 10:
+    #     placeholder.empty()
+    #     with placeholder.container():
+    #         with st.form("block10"):
+    #             st.write("请根据你的知识储备，判断以下命题的真假")
+    #             st.markdown(f"**{propositions[3]}**")
+    #             ## Q20
+    #             st.radio("该命题是：", options=["真命题", "假命题"], key="q20", index=None)
+    #             submitted = st.form_submit_button("提交本页")
+    #             if submitted:
+    #                 st.session_state.data_dict["q20"] = st.session_state.q20
+    #                 st.session_state.block10_submitted = True
+    #                 st.markdown("提交成功，请点击**下一页**")
+    #         if st.session_state.block10_submitted == True:
+    #             st.button("下一页", on_click=goToNextPage)
+    # ## Block 11 LLM 对话 4 后测
+    # elif st.session_state.page_num == 11:
 
     def disable_callback4():
         st.session_state.chat_disabled4 = True
