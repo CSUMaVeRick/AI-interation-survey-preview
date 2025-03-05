@@ -16,7 +16,7 @@ propositions = [
     "最好把手机的屏保、电脑的屏保全部改成绿色，因为绿色能缓解眼睛疲劳，保护视力。",
 ]
 ## 页面变量设置
-st.set_page_config(page_title="科学事实核查调研Demo-V2", page_icon="🧐")
+st.set_page_config(page_title="Scientific Fact-Checking Survey-Demo", page_icon="🧐")
 ## Session state 初始化
 if True:
     if "data_dict" not in st.session_state:
@@ -121,45 +121,53 @@ placeholder = st.empty()
 if st.session_state.page_num == 0:
     ## 利用 with 上下文呈现 cover letter
     with placeholder.container():
-        st.title("科学事实核查调研-Demo")
+        st.title("Scientific Fact-Checking Survey-Demo")
         st.markdown(
             """
-    您好！我们是北京师范大学新闻传播学院的研究团队，目前正在开展一项关于科学信息事实核查的学术研究。
-    诚挚邀请您参与填写本调查问卷。
+**DESCRIPTION OF THE RESEARCH**
 
-    本问卷旨在了解人们在事实核查中的行为和看法，请您按照问卷详细指引，根据实际情况回答以下问题。
+Thank you for your interest in participating in this study. The purpose of this research is to gain insights into people's behaviors and views regarding fact-checking of scientific information. 
+This study is run by researchers at the School of Journalism and Communication at Beijing Normal University, and the Department of Communication and Media Research at the University of Zürich. 
+Please read the following information carefully. 
 
-    **本问卷的回答没有对错之分，也不涉及任何价值判断，请放心填写。**
+**WHAT WILL MY PARTICIPATION INVOLVE?**
 
-    **所有数据仅用于学术研究，您的回答将被严格保密，不会用于商业或其他非研究用途。**
+If you choose to participate in this study, you will be asked to complete an online survey. The survey will take about 15 minutes to complete. 
+You need to follow the detailed instructions in the questionnaire and answer based on the actual situation. There are no right or wrong answers to the questions, and no value judgments are involved.
 
-    我们深知您的时间宝贵，非常感谢您抽出时间参与本次调查。
-    完成调查后，您将获得2元答谢金（若中途退出或未通过注意力检测，将无法发放）。
-    您的意见对我们的研究至关重要，并将为事实核查领域的进一步探索提供重要支持。
-    再次感谢您的参与与信任！
+**ARE THERE ANY RISKS TO ME? **
 
-    祝您生活愉快！
+There is minimal risk for breach of confidentiality. 
+
+**ARE THERE ANY BENEFITS TO ME? **
+
+After completing the survey, you will be compensated with 5 CHF; the compensation will not be provided if you withdraw midway or fail the attention check.
+
+**HOW WILL MY CONFIDENTIALITY BE PROTECTED? **
+
+No personally identifying information will be collected and the data from the survey will be saved with a random ID number. Any research data published in scientific journals or elsewhere will be anonymous and cannot be traced back to you. This completely anonymized data will be made publicly available. Research data will be retained for possible use in future research projects, but all possible identifying information will be removed from the data. All data will be used solely for academic research, They will not be used for commercial or other non-research purposes. While full confidentiality cannot be guaranteed, all confidentiality precautions the researchers have control over will be taken. 
+Your participation is completely voluntary. You do not have to participate, and you have the right to withdraw from the study at any time. 
     """
         )
         ## 知情同意
         st.radio(
-            "**你是否同意参加本研究并允许我们使用您的匿名答卷？**",
+            "**Do you agree to participate in this research and allow us to use your anonymous responses?**",
             [
-                "是的，我同意",
-                "不，我不同意",
+                "Yes, I agree.",
+                "No, I do not agree.",
             ],
             key="consent",
             label_visibility="visible",
             index=None,
             horizontal=True,
         )
-        agree = st.session_state.consent == "是的，我同意"
-        disagree = st.session_state.consent == "不，我不同意"
+        agree = st.session_state.consent == "Yes, I agree."
+        disagree = st.session_state.consent == "No, I do not agree."
         ## 同意后显示开始按钮
         if agree:
-            st.markdown("点击**开始**按钮以进入调研")
+            st.markdown("Click **START** button.")
             ## 当开始按钮被点击，令页数 +1
-            st.button("开始", on_click=goToNextPage)
+            st.button("START", on_click=goToNextPage)
 ## Block1 对人工智能情感态度
 elif st.session_state.page_num == 1:
     st.session_state.data_dict["StartAt"] = pd.Timestamp.now()
@@ -167,16 +175,18 @@ elif st.session_state.page_num == 1:
     placeholder.empty()
     with placeholder.container():
         with st.form("block1"):
-            st.write("请根据您对下面陈述的真实看法，选择最符合您当前想法的选项。")
+            st.write(
+                "Please choose the option that best reflects your current thoughts based on the statements below."
+            )
             ## Q1
             st.select_slider(
-                "当我想到将来接触人工智能时，我会感到不适。",
+                "When I think about interacting with artificial intelligence in the future, I feel uncomfortable.",
                 options=[
-                    "非常不同意",
-                    "有点不同意",
-                    "很难说同意或不同意",
-                    "有点同意",
-                    "非常同意",
+                    "Strongly Disagree",
+                    "Somewhat Disagree",
+                    "Neither Agree Nor Disagree",
+                    "Somewhat Agree",
+                    "Strongly Agree",
                 ],
                 key="q1",
                 # label_visibility="visible",
@@ -185,53 +195,53 @@ elif st.session_state.page_num == 1:
             )
             ## Q2
             st.select_slider(
-                "人工智能令人兴奋。",
+                "Artificial intelligence is exciting.",
                 options=[
-                    "非常不同意",
-                    "有点不同意",
-                    "很难说同意或不同意",
-                    "有点同意",
-                    "非常同意",
+                    "Strongly Disagree",
+                    "Somewhat Disagree",
+                    "Neither Agree Nor Disagree",
+                    "Somewhat Agree",
+                    "Strongly Agree",
                 ],
                 key="q2",
             )
 
             ## Q3
             st.select_slider(
-                "我对人工智能会做什么感到印象深刻。",
+                "I am impressed by what artificial intelligence can do.",
                 options=[
-                    "非常不同意",
-                    "有点不同意",
-                    "很难说同意或不同意",
-                    "有点同意",
-                    "非常同意",
+                    "Strongly Disagree",
+                    "Somewhat Disagree",
+                    "Neither Agree Nor Disagree",
+                    "Somewhat Agree",
+                    "Strongly Agree",
                 ],
                 key="q3",
             )
 
             ## Q4
             st.select_slider(
-                "人工智能帮助我感到更快乐。",
+                "Artificial intelligence helps me feel happier.",
                 options=[
-                    "非常不同意",
-                    "有点不同意",
-                    "很难说同意或不同意",
-                    "有点同意",
-                    "非常同意",
+                    "Strongly Disagree",
+                    "Somewhat Disagree",
+                    "Neither Agree Nor Disagree",
+                    "Somewhat Agree",
+                    "Strongly Agree",
                 ],
                 key="q4",
             )
 
-            submitted = st.form_submit_button("提交本页")
+            submitted = st.form_submit_button("Submit This Page")
             if submitted:
                 st.session_state.data_dict["q1"] = st.session_state.q1
                 st.session_state.data_dict["q2"] = st.session_state.q2
                 st.session_state.data_dict["q3"] = st.session_state.q3
                 st.session_state.data_dict["q4"] = st.session_state.q4
                 st.session_state.block1_submitted = True
-                st.markdown("提交成功，请点击**下一页**")
+                st.markdown("Success, please click **NEXT**.")
         if st.session_state.block1_submitted == True:
-            st.button("下一页", on_click=goToNextPage)
+            st.button("NEXT", on_click=goToNextPage)
 ## Block2 对人工智能行为倾向
 elif st.session_state.page_num == 2:
     placeholder.empty()
@@ -242,11 +252,11 @@ elif st.session_state.page_num == 2:
             st.select_slider(
                 "对于日常交易，我宁愿和人工智能系统交互，而不是和人。",
                 options=[
-                    "非常不同意",
-                    "有点不同意",
-                    "很难说同意或不同意",
-                    "有点同意",
-                    "非常同意",
+                    "Strongly Disagree",
+                    "Somewhat Disagree",
+                    "Neither Agree Nor Disagree",
+                    "Somewhat Agree",
+                    "Strongly Agree",
                 ],
                 key="q5",
             )
@@ -254,11 +264,11 @@ elif st.session_state.page_num == 2:
             st.select_slider(
                 "我对在日常生活中使用人工智能系统感兴趣。",
                 options=[
-                    "非常不同意",
-                    "有点不同意",
-                    "很难说同意或不同意",
-                    "有点同意",
-                    "非常同意",
+                    "Strongly Disagree",
+                    "Somewhat Disagree",
+                    "Neither Agree Nor Disagree",
+                    "Somewhat Agree",
+                    "Strongly Agree",
                 ],
                 key="q6",
             )
@@ -266,11 +276,11 @@ elif st.session_state.page_num == 2:
             st.select_slider(
                 "我愿意在自己的工作中接触人工智能。",
                 options=[
-                    "非常不同意",
-                    "有点不同意",
-                    "很难说同意或不同意",
-                    "有点同意",
-                    "非常同意",
+                    "Strongly Disagree",
+                    "Somewhat Disagree",
+                    "Neither Agree Nor Disagree",
+                    "Somewhat Agree",
+                    "Strongly Agree",
                 ],
                 key="q7",
             )
