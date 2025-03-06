@@ -5,12 +5,12 @@ from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
 
 zhipu = ChatOpenAI(
-    openai_api_base="https://open.bigmodel.cn/api/paas/v4/",
-    openai_api_key="78f1955b1b81b0276b2a4eec8f27d0b5.QxwaZBjMJYg9VTCJ",
-    model_name="glm-4-plus",
+    openai_api_base="https://api.deepseek.com",
+    openai_api_key="sk-b5939f31880c4b80a2e8d94f8f0600f1",
+    model_name="deepseek-chat",
 )
 propositions = [
-    "感冒时需要多喝水，大量喝水可以增加人的血容量，稀释病毒或者细菌的浓度，从而帮助身体好得更快。",
+    "It is necessary to drink more water when you have a cold. Drinking large amounts of water can increase blood volume, dilute the concentration of viruses or bacteria, and thus help the body recover faster.",
     "空调开26℃是最合适的。",
     "腐乳是通过发酵制作而成，发酵过程中会生出霉菌，食用存在致癌风险。",
     "最好把手机的屏保、电脑的屏保全部改成绿色，因为绿色能缓解眼睛疲劳，保护视力。",
@@ -135,15 +135,15 @@ Please read the following information carefully.
 If you choose to participate in this study, you will be asked to complete an online survey. The survey will take about 15 minutes to complete. 
 You need to follow the detailed instructions in the questionnaire and answer based on the actual situation. There are no right or wrong answers to the questions, and no value judgments are involved.
 
-**ARE THERE ANY RISKS TO ME? **
+**ARE THERE ANY RISKS TO ME?**
 
 There is minimal risk for breach of confidentiality. 
 
-**ARE THERE ANY BENEFITS TO ME? **
+**ARE THERE ANY BENEFITS TO ME?**
 
 After completing the survey, you will be compensated with 5 CHF; the compensation will not be provided if you withdraw midway or fail the attention check.
 
-**HOW WILL MY CONFIDENTIALITY BE PROTECTED? **
+**HOW WILL MY CONFIDENTIALITY BE PROTECTED?**
 
 No personally identifying information will be collected and the data from the survey will be saved with a random ID number. Any research data published in scientific journals or elsewhere will be anonymous and cannot be traced back to you. This completely anonymized data will be made publicly available. Research data will be retained for possible use in future research projects, but all possible identifying information will be removed from the data. All data will be used solely for academic research, They will not be used for commercial or other non-research purposes. While full confidentiality cannot be guaranteed, all confidentiality precautions the researchers have control over will be taken. 
 Your participation is completely voluntary. You do not have to participate, and you have the right to withdraw from the study at any time. 
@@ -247,10 +247,12 @@ elif st.session_state.page_num == 2:
     placeholder.empty()
     with placeholder.container():
         with st.form("block2"):
-            st.write("请根据您对下面陈述的真实看法，选择最符合您当前想法的选项。")
+            st.write(
+                "Please choose the option that best reflects your current thoughts based on the statements below."
+            )
             ## Q5
             st.select_slider(
-                "对于日常交易，我宁愿和人工智能系统交互，而不是和人。",
+                "For everyday transactions, I would rather interact with an AI system than with a human.",
                 options=[
                     "Strongly Disagree",
                     "Somewhat Disagree",
@@ -262,7 +264,7 @@ elif st.session_state.page_num == 2:
             )
             ## Q6
             st.select_slider(
-                "我对在日常生活中使用人工智能系统感兴趣。",
+                "I am interested in using AI systems in my daily life.",
                 options=[
                     "Strongly Disagree",
                     "Somewhat Disagree",
@@ -274,7 +276,7 @@ elif st.session_state.page_num == 2:
             )
             ## Q7
             st.select_slider(
-                "我愿意在自己的工作中接触人工智能。",
+                "I would be willing to interact with AI in my work.",
                 options=[
                     "Strongly Disagree",
                     "Somewhat Disagree",
@@ -284,100 +286,102 @@ elif st.session_state.page_num == 2:
                 ],
                 key="q7",
             )
-            submitted = st.form_submit_button("提交本页")
+            submitted = st.form_submit_button("Submit This Page")
             if submitted:
                 st.session_state.data_dict["q5"] = st.session_state.q5
                 st.session_state.data_dict["q6"] = st.session_state.q6
                 st.session_state.data_dict["q7"] = st.session_state.q7
                 st.session_state.block2_submitted = True
-                st.markdown("提交成功，请点击**下一页**")
+                st.markdown("Success, please click **NEXT**.")
         if st.session_state.block2_submitted == True:
-            st.button("下一页", on_click=goToNextPage)
+            st.button("NEXT", on_click=goToNextPage)
 ## Block3 人工智能知识
 elif st.session_state.page_num == 3:
     placeholder.empty()
     with placeholder.container():
         with st.form("block3"):
-            st.markdown("请根据您对AI的了解，完成以下6道**单选题**")
+            st.markdown(
+                "Please finish the following **6 single-choice questions** based on your understanding of AI."
+            )
             ## Q8
             st.radio(
-                "思考一下客户服务，以下哪项使用了人工智能（AI）？",
+                "Thinking about customer service, which of the following uses artificial intelligence (AI)?",
                 [
-                    "详细的常见问题网页",
-                    "发送给客户的在线调查，允许客户提供反馈",
-                    "提供表单供客户提供反馈的联系页面",
-                    "一个即时回答客户问题的聊天机器人",
-                    "不确定",
+                    "A detailed Frequently Asked Questions webpage",
+                    "An online survey sent to customers that allows them to provide feedback",
+                    "A contact page with a form available to customers to provide feedback",
+                    "A chatbot that immediately answers customer questions",
+                    "Not sure",
                 ],
                 key="q8",
                 index=None,
             )
             ## Q9
             st.radio(
-                "在播放音乐时，以下哪项使用了人工智能（AI）？",
+                "When playing music, which of the following uses artificial intelligence (AI)?",
                 [
-                    "使用蓝牙连接到无线扬声器",
-                    "播放列表推荐",
-                    "无线互联网连接用于流媒体播放音乐",
-                    "从选定的播放列表中随机播放",
-                    "不确定",
+                    "Using Bluetooth to connect to wireless speakers",
+                    "A playlist recommendation",
+                    "A wireless internet connection to stream the music",
+                    "Shuffle play from a chosen playlist",
+                    "Not sure",
                 ],
                 key="q9",
                 index=None,
             )
             ## Q10
             st.radio(
-                "在使用电子邮件时，以下哪项使用了人工智能（AI）？",
+                "When using email, which of the following uses artificial intelligence (AI)?",
                 [
-                    "电子邮件服务在用户打开后将电子邮件标记为已读",
-                    "电子邮件服务允许用户安排电子邮件在未来特定时间发送",
-                    "电子邮件服务将邮件分类为垃圾邮件",
-                    "电子邮件服务按时间和日期排序邮件",
-                    "不确定",
+                    "The email service marking an email as read after the user opens it",
+                    "The email service allowing the user to schedule an email to send at a specific time in the future",
+                    "The email service categorizing an email as spam",
+                    "The email service sorting emails by time and date",
+                    "Not sure",
                 ],
                 key="q10",
                 index=None,
             )
             ## Q11
             st.radio(
-                "思考一下健康产品，以下哪项使用了人工智能（AI）？",
+                "Thinking about health products, which of the following uses artificial intelligence (AI)?",
                 [
-                    "分析运动和睡眠模式的可穿戴健身追踪器",
-                    "放在某人舌下的温度计，用于检测发热",
-                    "居家新冠检测",
-                    "测量血氧水平的脉搏血氧仪",
-                    "不确定",
+                    "Wearable fitness trackers that analyze exercise and sleeping patterns",
+                    "Thermometers that are placed under someone’s tongue to detect a fever",
+                    "At-home COVID-19 tests",
+                    "Pulse oximeters that measure a person’s oxygen level of the blood",
+                    "Not sure",
                 ],
                 key="q11",
                 index=None,
             )
             ## Q12
             st.radio(
-                "思考一下在线购物，以下哪项使用了人工智能（AI）？",
+                "Thinking about online shopping, which of the following uses artificial intelligence (AI)?",
                 [
-                    "存储账户信息，如送货地址",
-                    "之前购买记录",
-                    "基于之前购买记录的产品推荐",
-                    "其他客户的产品评论",
-                    "不确定",
+                    "Storage of account information, such as shipping addresses",
+                    "Records of previous purchases",
+                    "Product recommendations based on previous purchases",
+                    "Product reviews from other customers",
+                    "Not sure",
                 ],
                 key="q12",
                 index=None,
             )
             ## Q13
             st.radio(
-                "思考一下家用设备，以下哪项使用了人工智能（AI）？",
+                "Thinking about devices in the home, which of the following uses artificial intelligence (AI)?",
                 [
-                    "编程家庭温控器在特定时间改变温度",
-                    "当门口有陌生人时，发出警报的安全摄像头",
-                    "编程定时器控制家中的灯何时开关",
-                    "当水过滤器需要更换时，指示灯变红",
-                    "不确定",
+                    "Programming a home thermostat to change temperatures at certain times",
+                    "A security camera that sends an alert when there is an unrecognized person at the door",
+                    "Programming a timer to control when lights in a home turn on and off",
+                    "An indicator light that turns red when a water filter needs to be replaced",
+                    "Not sure",
                 ],
                 key="q13",
                 index=None,
             )
-            submitted = st.form_submit_button("提交本页")
+            submitted = st.form_submit_button("Submit This Page")
             if submitted:
                 st.session_state.data_dict["q8"] = st.session_state.q8
                 st.session_state.data_dict["q9"] = st.session_state.q9
@@ -386,25 +390,29 @@ elif st.session_state.page_num == 3:
                 st.session_state.data_dict["q12"] = st.session_state.q12
                 st.session_state.data_dict["q13"] = st.session_state.q13
                 st.session_state.block3_submitted = True
-                st.markdown("提交成功，请点击**下一页**")
+                st.markdown("Success, please click **NEXT**.")
         if st.session_state.block3_submitted == True:
-            st.button("下一页", on_click=goToNextPage)
+            st.button("NEXT", on_click=goToNextPage)
 ## Block 4 LLM 对话 1 前测
 elif st.session_state.page_num == 4:
     placeholder.empty()
     with placeholder.container():
         with st.form("block4"):
-            st.write("请根据你的知识储备，判断以下命题的真假")
+            st.write(
+                "Based on your knowledge, please determine if the following statement is true or false."
+            )
             st.markdown(f"**{propositions[0]}**")
             ## Q14
-            st.radio("该命题是：", options=["真命题", "假命题"], key="q14", index=None)
-            submitted = st.form_submit_button("提交本页")
+            st.radio(
+                "This statement is:", options=["True", "False"], key="q14", index=None
+            )
+            submitted = st.form_submit_button("Submit This Page")
             if submitted:
                 st.session_state.data_dict["q14"] = st.session_state.q14
                 st.session_state.block4_submitted = True
-                st.markdown("提交成功，请点击**下一页**")
+                st.markdown("Success, please click **NEXT**.")
         if st.session_state.block4_submitted == True:
-            st.button("下一页", on_click=goToNextPage)
+            st.button("NEXT", on_click=goToNextPage)
 ## Block 5 LLM 对话 1 后测
 elif st.session_state.page_num == 5:
 
@@ -415,7 +423,7 @@ elif st.session_state.page_num == 5:
 
     with placeholder.container():
         st.write(
-            "接下来，你有3次与AI对话的机会。请向AI提出与命题相关的问题。3次机会用尽后判断命题真假。命题为："
+            "Next, you have 3 chances to converse with AI. Please ask AI questions related to the statement. After using up the 3 chances, you may determine the truth or falsehood of the statement. The statement is:"
         )
         st.markdown(f"**{propositions[0]}**")
         ## 显示聊天历史
@@ -425,7 +433,7 @@ elif st.session_state.page_num == 5:
         if st.session_state.chat_num1 >= 2:
             st.session_state.chat_disabled1 = True
         user_input = st.chat_input(
-            f"还可以输入{2-st.session_state.chat_num1}次，请输入...",
+            f"You can chat {2-st.session_state.chat_num1} round(s), please input...",
             disabled=st.session_state.chat_disabled1,
             on_submit=disable_callback1,
         )
@@ -448,19 +456,24 @@ elif st.session_state.page_num == 5:
             st.rerun()
         if st.session_state.chat_num1 >= 2:
             with st.form("block5"):
-                st.write("请根据你的知识储备及与AI的对话，判断命题的真假")
+                st.write(
+                    "Based on your knowledge and conversation with AI, please determine if the statement is true or false."
+                )
                 ## Q15
                 st.radio(
-                    "该命题是：", options=["真命题", "假命题"], key="q15", index=None
+                    "This statement is:",
+                    options=["True", "False"],
+                    key="q15",
+                    index=None,
                 )
-                submitted = st.form_submit_button("提交本页")
+                submitted = st.form_submit_button("Submit This Page")
                 if submitted:
                     st.session_state.data_dict["q15"] = st.session_state.q15
                     st.session_state.data_dict["dialog1"] = st.session_state.messages1
                     st.session_state.block5_submitted = True
-                    st.markdown("提交成功，请点击**下一页**")
+                    st.markdown("Success, please click **NEXT**.")
             if st.session_state.block5_submitted == True:
-                st.button("下一页", on_click=goToNextPage)
+                st.button("NEXT", on_click=goToNextPage)
 # ## Block 6 LLM 对话 2 前测
 # elif st.session_state.page_num == 6:
 #     placeholder.empty()
@@ -685,32 +698,42 @@ elif st.session_state.page_num == 12:
         with st.form("block12"):
             ## Q22
             st.radio(
-                "您的性别是？", ["男", "女"], key="q22", index=None, horizontal=True
+                "What is your gender?",
+                ["Male", "Female"],
+                key="q22",
+                index=None,
+                horizontal=True,
             )
             ## Q23
-            st.text_input("您的出生年份是？", key="q23")
+            st.text_input("What is your year of birth?", key="q23")
             ## Q24
             st.radio(
-                "您的学历是？",
-                ["小学及以下", "初中", "高中", "大学专科", "大学本科及以上"],
+                "What is your highest level of education?",
+                [
+                    "Primary school or below",
+                    "Junior high school",
+                    "Senior high school",
+                    "College",
+                    "Bachelor's degree or above",
+                ],
                 key="q24",
                 index=None,
             )
             ## Q25
             st.text_input(
-                "您每月的可支配金额大约是？【以人民币（元）为单位，例如1000元则填写1000】",
+                "What is your approximate monthly disposable income in Chinese Yuan? (e.g., 1000)",
                 key="q25",
             )
-            submitted = st.form_submit_button("提交本页")
+            submitted = st.form_submit_button("Submit This Page")
             if submitted:
                 st.session_state.data_dict["q22"] = st.session_state.q22
                 st.session_state.data_dict["q23"] = st.session_state.q23
                 st.session_state.data_dict["q24"] = st.session_state.q24
                 st.session_state.data_dict["q25"] = st.session_state.q25
                 st.session_state.block12_submitted = True
-                st.markdown("提交成功，请点击**下一页**")
+                st.markdown("Success, please click **NEXT**.")
         if st.session_state.block12_submitted == True:
-            st.button("下一页", on_click=goToNextPage)
+            st.button("NEXT", on_click=goToNextPage)
 ## 最后一页
 else:
     st.session_state.data_dict["endAt"] = pd.Timestamp.now()
@@ -718,26 +741,15 @@ else:
     with placeholder.container():
         st.markdown(
             """
-感谢您的参与，下面揭晓问题的答案：
+Thank you for your participation. Here are the answers to the statements:
 
-陈述一：感冒时要多喝水，大量喝水可以增加人的血容量，稀释病毒或者细菌的浓度，从而帮助身体好得更快。
+Statement One: When you have a cold, you should drink more water. Drinking a large amount of water can increase blood volume and dilute the concentration of viruses or bacteria, helping the body recover faster.
 
-（假）多喝水治不了感冒，水喝得过多可能还会造成身体脱水。感冒时，人体会通过发烧来对抗病毒，这个过程会使体内的水分大量流失，同时也会带走钠、钾等电解质成分。这时如果只是大量补充白开水，会将体内钠、钾等电解质元素冲淡。当体内钠元素浓度下降过多，人会出现眩晕、乏力等情况。此时，大脑会自动发出信号，通过尿液、汗液等方式排出体内多余的水分，以满足体内电解质浓度平衡的需要。所以，感冒不能一味地大量喝水，在喝水的同时还要补充足够的电解质，才能帮助缓解感冒症状。
-
-陈述二：空调开26℃是最合适的。
-
-（假）但是温度设高一点会更省电。因为空调最适合的温度，与人体感受，及室内外环境的温度、湿度、墙体导热、日光照射、室内的动态变化等因素相关，在大型建筑中空调温度会动态调整来节能减排。一般家庭设置在26-30℃都是可以的。空调耗电量则与所在地区温度，湿度，风速等气象条件，空调自身能效水平，使用的制冷剂，空调的结构等均有关系，设定温度上升一度，带来的影响不一定相同，但很多实验都表明，总的趋势仍然是“调高一度，省电一点”。
-
-陈述三：腐乳是通过发酵制作而成，发酵过程中会生出霉菌，食用存在致癌风险。
-
-（假）这个观点不正确，正常食用腐乳不会致癌。腐乳在制作过程中确实需要经过霉菌发酵，其中以毛霉菌为主，也包括少量的经过特定方法严选的酵母菌、曲霉、青霉，但这些都是经过严选的有益食用菌，不会产生致癌物。再者，大豆中的亚硝酸盐非常低，即使长达几个月的发酵也不会带来大量的亚硝酸盐。因此，不能把腐乳和盐、腌菜等混为一谈。此外，豆腐乳发酵过程中使用的红曲色素也是一种天然色素，对人体十分安全。毛霉和红曲也均不在世界卫生组织发布的致癌物质清单中。所以，腐乳致癌一说纯属危言耸听！
-
-陈述四：最好把手机的屏保、电脑的屏保全部改成绿色，因为绿色能缓解眼睛疲劳，保护视力。
-
-（假）这是个误会，严格意义来说看绿色和保护视力没有什么关系。对眼疲劳影响最大的是看屏幕的距离和时间长短，即便是把屏幕设置成了绿色，看的时间过长，眼睛还是会干涩、疲劳。绿色光线比较柔和，相对刺激较小，同时绿色能够让人感到舒服与平静，所以大家会觉得绿色屏幕看起来会更舒服，但它对保护眼睛的帮助较为有限，特别是当近距离视物时。“多看看绿色对眼睛有好处”通常是指多看看远处草地、树木之类的景物，让眼睛放松，从而缓解视疲劳。
+(False) Drinking more water does not cure a cold, and excessive water intake may even cause dehydration. When you have a cold, the body fights the virus by raising its temperature, which causes a significant loss of water in the body, along with electrolytes like sodium and potassium. Simply drinking a large amount of plain water at this time can dilute these electrolytes. When the sodium level in the body drops too low, one may experience dizziness and fatigue. The brain will then automatically signal the body to expel the excess water through urine and sweat to maintain the balance of electrolytes. Therefore, it’s not advisable to just drink a lot of water when you have a cold. It’s important to replenish enough electrolytes along with water to help alleviate cold symptoms.
 """
         )
         ## 用于测试
+        st.markdown("Results in this survey (for program testing):")
         st.write(st.session_state.data_dict)
         # todo 正式部署需替换为数据库插入
 
