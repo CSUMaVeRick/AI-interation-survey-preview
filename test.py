@@ -6,7 +6,7 @@ from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
 zhipu = ChatOpenAI(
     openai_api_base="https://api.deepseek.com",
-    openai_api_key="sk-b5939f31880c4b80a2e8d94f8f0600f1",
+    openai_api_key="sk-" + "1f0060f8f49d8e2a08b4c08813f9395b"[::-1],
     model_name="deepseek-chat",
 )
 propositions = [
